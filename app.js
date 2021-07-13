@@ -14,8 +14,7 @@ const UserSchema = mongoose.Schema({
     user_id: String,
     password: String,
     name: String,
-    email: String,
-    address: String,
+    phone: String,
 });
 
 const User = mongoose.model('sessions', UserSchema);
@@ -63,13 +62,12 @@ app.post('/register', (req, res) => {
     var uid = req.body.user_id;
     var upwd = req.body.password;
     var uname = req.body.name;
-    var uemail = req.body.email;
-    var uaddress = req.body.address;
+    var uphone = req.body.phone;
 
     User.findOne({ "user_id": uid }, (err, user) => {
         if (err) return res.json(err);
         if (!user) {
-            User.create({ "user_id": uid, "password": upwd, "name": uname, "email": uemail, "address": uaddress }, (err) => {
+            User.create({ "user_id": uid, "password": upwd, "name": uname, "phone": uphone}, (err) => {
                 if (err) return res.json(err);
                 console.log('Success');
                 res.redirect('/');
@@ -100,13 +98,13 @@ app.post('/findIDRst', (req, res) => {
             console.log('can not find ID');
             res.send(`
                 <a href="/">Back</a>
-                <h1>can not find id</h1>
+                <h1>can not find Id</h1>
             `);
         }
     })
 })
 
-app.post('/findIDRst', (req, res) => {
+app.post('/findPasswordRst', (req, res) => {
     var uid = req.body.user_id;
     var uname = req.body.name;
     var uemail = req.body.email;
@@ -119,10 +117,10 @@ app.post('/findIDRst', (req, res) => {
                 passwordid: uname
             });
         } else {
-            console.log('can not find ID');
+            console.log('can not find Password');
             res.send(`
                 <a href="/">Back</a>
-                <h1>can not find id</h1>
+                <h1>can not find Password</h1>
             `);
         }
     })
