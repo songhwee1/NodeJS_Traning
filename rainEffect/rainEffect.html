@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <title>Rain Effect</title>  
+    <style>  
+        body,html{margin:0px;height:100%;}  
+        ul,ol{margin:0;padding:0;list-style:none;}  
+        a{text-decoration:none;}  
+        img{border:none;}  
+    </style>  
+</head>  
+<body>  
+    <Canvas id = "canvas"></Canvas>  
+    <script>  
+        // window.requestAnimFram = (function(){  
+        //  // return   
+        // })();  
+        var can = document.getElementById('canvas');  
+        var cxt = can.getContext('2d');  
+                 // Get the width and height of the browser window, and set the full screen canvas (canvas width must be set to high, otherwise it will use the default width and height of the back is difficult to control the drawing are the coordinates (coordinates and width and height are difficult to control))  
+        var w = can.width = window.innerWidth;  
+        var h = can.height = window.innerHeight;  
+                 // set the width and height responsive  
+        window.onresize = function(){  
+            w = can.width = window.innerWidth;  
+            h = can.height = window.innerHeight;  
+            console.log(w+' -- '+w/50)  
+        }  
+        var drops = []; // array raindrops  
+        function Drop(){};  
+        Drop.prototype = {  
+                         init: function () {// initialization process (initial set of properties for each raindrop)  
+                this.x = random(0,w);  
+                this.y = 0;  
+                                 // y-direction velocity value  
+                this.vy = random(4,5);  
+                                 // raindrops falling maximum value y  
+                this.l=random(0.8*h,0.9*h);  
+                  
+                                 this.r = 1; // add corrugations initial radius  
+                                 this.vr = 1; // radius increases the speed ripple  
+                                 this.a = 1; // raindrops determination disappeared transparency  
+                                 this.va = 0.96; // transparency coefficient of variation  
+            },  
+                         draw: function () {// draw graphics  
+                                 if (this.y> this.l) {// raindrop is dropping to a specified location on the drawing corrugations  
+                                         cxt.beginPath (); // first start of the path, before each draw, the first pen  
+                    cxt.arc(this.x,this.y,this.r,0,Math.PI*2,false);  
+                                 } else {// draw the falling raindrops  
+                    cxt.fillStyle = 'rgb(255,255,255)';  
+                    cxt.fillRect(this.x,this.y,2,10);  
+                }  
+                      
+                                 this.update (); // update every draw;  
+            },  
+                         update: function () {// update the coordinate position  
+                if(this.y<this.l){  
+                    this.y+=this.vy;  
+                                 } else {// drops fall to the designated location  
+                    if(this.a>0.01){  
+                        this.r += this.vr;    
+                        if (this.r> 30) {// when the radius is greater than 50, the transparency will increase  
+                            this.a *= this.va;  
+                        }  
+                    }else{  
+                                                 this.init (); // re-initialize the raindrops  
+                    }  
+                }  
+            },  
+        }  
+        function random(min,max){  
+                         return Math.random () * (max-min) + min; // random number between min-max  
+        }  
+  
+                 // instantiate an object  
+        // var drop = new Drop();  
+                 // drop.init (); // initialize  
+                 // drop.draw (); // Draw  
+        for(var i=0;i<30;i++){  
+            setTimeout(function(){  
+                var drop = new Drop();  
+                drop.init();  
+                                 drops.push (drop); // add to the array of raindrops  
+            },i*300)  
+        }  
+        
+        // console.log(drops)  
+        move();  
+        function move(){  
+            // cxt.clearRect();  
+                         // Draw first transparent layer, then draw a raindrop, a raindrop put the first transparent layer covers the first drawing, a plurality of transparent laminated together, nor will increasingly transparent  
+            cxt.fillStyle = 'rgba(0, 0, 255, 0.2)';  
+            cxt.fillRect(0,0,w,h);  
+            for(var i=0;i<drops.length;i++){  
+                drops[i].draw();  
+            }  
+            requestAnimationFrame(move);  
+        }  
+    </script>  
+</body>  
+</html>
