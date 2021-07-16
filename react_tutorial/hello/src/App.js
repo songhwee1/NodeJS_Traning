@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {Clock} from './components/Clock';
 //추가
 const element = <div>This is JSX</div>;
 
@@ -17,13 +17,16 @@ function App() {
       <header className="App-header">
         <p>
           Hello React!
-          
-          {/*추가*/}
+
           { element }
 
           <Greeting name={"송휘"}/>
           <Greeting name={"휘휘"}/>
           <Greeting name={"하휘~"}/>
+          <h1>
+            <Clock/>
+          </h1>
+          
 
           
         </p>
