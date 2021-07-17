@@ -17,10 +17,6 @@ class Toggle extends Component {
         isToggleOn: !state.isToggleOn
       }));
     }
-
-    if (isToggleOn){
-
-    }
   
     render() {
         return (
