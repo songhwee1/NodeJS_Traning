@@ -1,5 +1,6 @@
 import React from 'react';
 import {Clock} from './components/Clock';
+import {Toggle} from './components/Toggle';
 //추가
 const element = <div>This is JSX</div>;
 
@@ -26,9 +27,9 @@ function App() {
           <h1>
             <Clock/>
           </h1>
+          <Toggle/>
           
-
-          
+      
         </p>
       </header>
     </div>
