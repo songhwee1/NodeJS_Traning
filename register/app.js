@@ -17,6 +17,12 @@ const UserSchema = mongoose.Schema({
     phone: String,
 });
 
+//fido
+const { Fido2Lib } = require("fido2-lib");
+
+// create a new instance of the library
+var f2l = new Fido2Lib();``
+
 const User = mongoose.model('sessions', UserSchema);
 const app = require('express')();
 const session = require('express-session');
